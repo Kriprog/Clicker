@@ -1,0 +1,23 @@
+﻿ h1 {
+    color: rgb(185, 6, 6);
+}
+
+.button-container {
+    display: flex;
+    justify-content: center; /* Horizontal centering */
+    align-items: center; /* Vertical centering, if needed */
+    height: 100%; /* Ensure the container takes full height if needed */
+}
+
+/* Optional: Add styles for the button */
+.BUTTON {
+    background-color: #610505;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.BUTTON:hover {
+    background-color: #585555;
+}

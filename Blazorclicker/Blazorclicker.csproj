@@ -7,11 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Components\Clicker.razor.css" />
     <None Remove="Components\Pages\Clicker.razor.css" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Components\Pages\Clicker.razor.css" />
   </ItemGroup>
 
 </Project>

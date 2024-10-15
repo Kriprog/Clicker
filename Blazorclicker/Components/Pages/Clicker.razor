@@ -1,24 +1,77 @@
-@page "/"
+@page "/Clicker"
 @rendermode InteractiveServer
 @inject IJSRuntime JSRuntime
 @inject CounterService CounterService
 
 
-
-<h1>Hello world</h1>
+<div class="float-sm-right">
 <article class="content px-4">
-    <div class="button-container">
-        <button class="BUTTON" @onclick="IncrementCount" >Click Me</button>
-        <p1>Current Count: @CounterService.Count</p1>
-    </div>
+   
+
+
+
+            <table class="table-fixed border-spacing-19">
+            <tr>
+                <th class=border border-slate-800 scope="col">Buy</th>
+                <th class=border border-slate-600 scope="col">Tool</th>
+                <th class=border border-slate-600 scope="col">Amount</th>
+                <th class=border border-slate-600 scope="col">Cost</th>
+            </tr>
+            
+            <tr>
+                <td class=border border-slate-600><button class="BUTTON" @onclick="IncrementCount">Click</button></td>
+                <td class=border border-slate-600>@CounterService.Count$</td>
+            </tr>
+            <tr>
+                <td class=border border-slate-600><button class="BUTTON" @onclick="IncrementClickPower">Buy</button></td>
+                <td class=border border-slate-600>Click power</td>
+                <td class=border border-slate-600>@CounterService.ClickPower</td>
+                <td class=border border-slate-600>@CounterService.PriceOfClick$</td>
+            </tr> 
+            <tr>
+                <td class=border border-slate-600><button class="BUTTON" @onclick="IncrementAutoClickerPower">Buy</button></td>
+                <td class=border border-slate-600>Autoclicker power</td>
+                <td class=border border-slate-600>@(CounterService.AutoClickerPower * 10)</td>
+                <td class=border border-slate-600>@CounterService.PriceOfAutoClicker$</td>
+            </tr>
+        </table>
+
+
+    
 </article>
+</div>
 
 @code {
-    private async Task IncrementCount()
+
+    DateTime localDate = DateTime.Now;
+    DateTime utcDate = DateTime.UtcNow;
+
+    protected override void OnInitialized()
+    {
+        CounterService.OnChange += UpdateUI;
+    }
+    public void Dispose()
+    {
+        CounterService.OnChange -= UpdateUI;
+    }
+    private void UpdateUI()
+    {
+        InvokeAsync(StateHasChanged); // Use InvokeAsync to update UI safely
+    }
+    private void IncrementCount()
     {
         CounterService.IncrementCount();
-        await JSRuntime.InvokeVoidAsync("console.log", $"Count incremented to: {CounterService.Count}");
-        await InvokeAsync(StateHasChanged);
-
+        // await JSRuntime.InvokeVoidAsync("console.log", $"Count incremented to: {CounterService.Count}");
     }
+    private void IncrementClickPower()
+    {
+        CounterService.BuyClickPower();
+        // await JSRuntime.InvokeVoidAsync("console.log", $"Count incremented to: {CounterService.Count}");
+    }
+    private void IncrementAutoClickerPower()
+    {
+        CounterService.BuyAutoClickerPower();
+        // await JSRuntime.InvokeVoidAsync("console.log", $"Count incremented to: {CounterService.Count}");
+    }
+
 }
